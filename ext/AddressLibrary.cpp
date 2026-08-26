@@ -51,12 +51,26 @@ IAL::IAL() :
 
 	m_tLoadStart = pc.Query();
 
+	const int format = m_ver >= 0x0001000700000000 ? 5 : m_isAE ? 2 : 1;
+
 	m_isLoaded = m_database->Load(
-		m_ver >= 0x0001000700000000 ? 5 : m_isAE ? 2 : 1,
+		format,
 		parts[0],
 		parts[1],
 		parts[2],
 		parts[3]);
+
+	// tolerate databases losslessly re-encoded to the old format
+	// (some third-party packages ship format-2 conversions)
+	if (!m_isLoaded && format == 5)
+	{
+		m_isLoaded = m_database->Load(
+			2,
+			parts[0],
+			parts[1],
+			parts[2],
+			parts[3]);
+	}
 
 	m_tLoadEnd = pc.Query();
 }
