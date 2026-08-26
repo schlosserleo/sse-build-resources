@@ -172,7 +172,7 @@ public:
 		_snprintf_s(
 			fileName,
 			_TRUNCATE,
-			a_format == 2 ?
+			a_format >= 2 ?
                 "Data\\SKSE\\Plugins\\versionlib-%d-%d-%d-%d.bin" :
                 "Data\\SKSE\\Plugins\\version-%d-%d-%d-%d.bin",
 			major,
@@ -188,6 +188,11 @@ public:
 
 		if (format != a_format)
 			return false;
+
+		if (format == 5)
+		{
+			return LoadV5(file);
+		}
 
 		for (int i = 0; i < 4; i++)
 		{
@@ -315,6 +320,59 @@ public:
 
 			poffset = q2;
 			pvid = q1;
+		}
+
+		return true;
+	}
+
+	// format 5 (1.7.99+): flat table -> u32 version[4], char name[64],
+	// u32 ptrSize, u32 reserved, u32 count, u32 offsets[count] indexed by id
+	bool LoadV5(std::ifstream& file)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			_ver[i] = read<int>(file);
+		}
+
+		{
+			char verName[64];
+			_snprintf_s(verName, _TRUNCATE, "%d.%d.%d.%d", _ver[0], _ver[1], _ver[2], _ver[3]);
+			_verStr = verName;
+		}
+
+		char moduleName[64];
+		file.read(moduleName, sizeof(moduleName));
+
+		_base = (unsigned long long)GetModuleHandleA(NULL);
+
+		int ptrSize = read<int>(file);
+		(void)ptrSize;
+
+		int reserved = read<int>(file);
+		(void)reserved;
+
+		int addrCount = read<int>(file);
+
+		if (addrCount < 0)
+		{
+			clear();
+			return false;
+		}
+
+		for (int i = 0; i < addrCount; i++)
+		{
+			unsigned int offset = read<unsigned int>(file);
+
+			if (!file.good())
+			{
+				clear();
+				return false;
+			}
+
+			if (offset != 0)
+			{
+				_data[(unsigned long long)i] = offset;
+			}
 		}
 
 		return true;

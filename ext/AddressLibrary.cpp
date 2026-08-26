@@ -52,7 +52,7 @@ IAL::IAL() :
 	m_tLoadStart = pc.Query();
 
 	m_isLoaded = m_database->Load(
-		m_isAE ? 2 : 1,
+		m_ver >= 0x0001000700000000 ? 5 : m_isAE ? 2 : 1,
 		parts[0],
 		parts[1],
 		parts[2],

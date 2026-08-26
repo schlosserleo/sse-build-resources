@@ -47,7 +47,7 @@ public:
 	ISKSEBase& operator=(ISKSEBase&&) = delete;
 
 	[[nodiscard]] bool Query(const SKSEInterface* a_skse, PluginInfo* a_info);
-	bool OpenLog();
+	bool OpenLog(std::uint32_t a_version = 0);
 	[[nodiscard]] bool CreateTrampolines(const SKSEInterface* a_skse);
 	[[nodiscard]] bool QueryInterfaces(const SKSEInterface* a_skse);
 
@@ -85,6 +85,11 @@ public:
 		return m_pluginHandle;
 	}
 
+	[[nodiscard]] inline constexpr std::uint32_t GetRuntimeVersion() const noexcept
+	{
+		return m_runtimeVersion;
+	}
+
 	[[nodiscard]] inline constexpr HMODULE ModuleHandle() const noexcept
 	{
 		return m_moduleHandle;
@@ -102,7 +107,7 @@ public:
 
 protected:
 	virtual void OnLogOpen() = 0;
-	virtual const char* GetLogPath() const = 0;
+	virtual const char* GetLogPath(std::uint32_t a_version) const = 0;
 	virtual const char* GetPluginName() const = 0;
 	virtual std::uint32_t GetPluginVersion() const = 0;
 	virtual bool CheckRuntimeVersion(std::uint32_t a_version) const = 0;
@@ -122,6 +127,7 @@ private:
 
 	HMODULE m_moduleHandle{ nullptr };
 	PluginHandle m_pluginHandle{ kPluginHandle_Invalid };
+	std::uint32_t m_runtimeVersion{ 0 };
 
 	void* m_interfaces[SKSEInterfaceType::kInterface_Max]{ nullptr };
 	BranchTrampoline m_trampolines[2];
@@ -252,7 +258,7 @@ bool ISKSEBase<
 	_TrampolineBranch,
 	_TrampolineLocal>::Query(const SKSEInterface* a_skse, PluginInfo* a_info)
 {
-	OpenLog();
+	OpenLog(a_skse->runtimeVersion);
 
 	a_info->infoVersion = PluginInfo::kInfoVersion;
 	a_info->name = GetPluginName();
@@ -288,9 +294,11 @@ template <
 bool ISKSEBase<
 	_InterfaceFlags,
 	_TrampolineBranch,
-	_TrampolineLocal>::OpenLog()
+	_TrampolineLocal>::OpenLog(std::uint32_t a_version)
 {
-	auto logPath = GetLogPath();
+	m_runtimeVersion = a_version;
+
+	auto logPath = GetLogPath(a_version);
 	if (logPath && !gLog.IsOpen())
 	{
 		gLog.OpenRelative(CSIDL_MYDOCUMENTS, logPath);

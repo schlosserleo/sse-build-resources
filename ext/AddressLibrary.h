@@ -37,6 +37,11 @@ public:
 		return m_Instance.m_hasBadQuery;
 	}
 
+	inline static constexpr unsigned long long GetLastBadQueryID() noexcept
+	{
+		return m_Instance.m_lastBadQueryID;
+	}
+
 	inline static std::size_t Size()
 	{
 		return m_Instance.m_database->GetOffsetMap().size();
@@ -59,6 +64,35 @@ public:
 			a_id_ae,
 			a_offset_se,
 			a_offset_ae);
+
+		if constexpr (std::is_same_v<T, std::uintptr_t>)
+		{
+			return res;
+		}
+		else
+		{
+			return reinterpret_cast<T>(res);
+		}
+	}
+
+	// resolve without setting the bad-query flag; returns null for ids
+	// absent from the database (e.g. classes removed in newer runtimes)
+	template <class T = std::uintptr_t>
+	inline static T AddrSoft(
+		unsigned long long a_id_se,
+		unsigned long long a_id_ae)
+	{
+		auto id = m_Instance.m_isAE ?
+                      a_id_ae :
+                      a_id_se;
+
+		std::uintptr_t res = 0;
+
+		if (id != 0)
+		{
+			res = reinterpret_cast<std::uintptr_t>(
+				m_Instance.m_database->FindAddressById(id));
+		}
 
 		if constexpr (std::is_same_v<T, std::uintptr_t>)
 		{
@@ -190,6 +224,7 @@ private:
 		if (!addr)
 		{
 			m_Instance.m_hasBadQuery = true;
+			m_Instance.m_lastBadQueryID = id;
 			return 0;
 		}
 
@@ -225,6 +260,7 @@ private:
 		if (!addr)
 		{
 			m_Instance.m_hasBadQuery = true;
+			m_Instance.m_lastBadQueryID = id;
 			return 0;
 		}
 
@@ -238,6 +274,7 @@ private:
 
 	bool m_isLoaded{ false };
 	bool m_hasBadQuery{ false };
+	unsigned long long m_lastBadQueryID{ 0 };
 	long long m_tLoadStart{ 0 };
 	long long m_tLoadEnd{ 0 };
 

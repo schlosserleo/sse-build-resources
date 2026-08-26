@@ -198,3 +198,26 @@ namespace Hook
 		return true;
 	}
 }
+
+namespace hook
+{
+	template <class T>
+	constexpr bool call5(
+		BranchTrampoline& a_trampoline,
+		std::uintptr_t    a_addr,
+		std::uintptr_t    a_dst,
+		T&                a_orig)
+	{
+		return Hook::Call5(a_trampoline, a_addr, a_dst, a_orig);
+	}
+
+	template <class T>
+	constexpr bool call6(
+		BranchTrampoline& a_trampoline,
+		std::uintptr_t    a_addr,
+		std::uintptr_t    a_dst,
+		T&                a_orig)
+	{
+		return Hook::Call6(a_trampoline, a_addr, a_dst, a_orig);
+	}
+}

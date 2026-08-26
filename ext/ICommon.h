@@ -23,7 +23,7 @@
 
 #include <exception>
 #include <string>
-#include <xstddef>
+#include <functional>
 
 #include "STLCommon.h"
 

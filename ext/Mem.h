@@ -3,7 +3,7 @@
 #include "ICommon.h"
 
 #include <stdexcept>
-#include <xstddef>
+#include <functional>
 
 namespace mem
 {
@@ -181,3 +181,6 @@ namespace mem
 	SKMP_FORCEINLINE void operator delete[](void *, void *) {}
 
 #define SKMP_DECLARE_ALIGNED_ALLOCATOR_AUTO() SKMP_DECLARE_ALIGNED_ALLOCATOR(SIMD_ALIGNMENT)
+
+#define SKMP_ALIGNED_REDEFINE_NEW_MM(x) SKMP_DECLARE_ALIGNED_ALLOCATOR(x)
+#define SKMP_ALIGNED_REDEFINE_NEW_MM_AUTO() SKMP_DECLARE_ALIGNED_ALLOCATOR(SIMD_ALIGNMENT)

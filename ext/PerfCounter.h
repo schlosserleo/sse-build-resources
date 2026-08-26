@@ -1,6 +1,6 @@
 #pragma once
 
-#include <profileapi.h>
+#include <Windows.h>
 
 class PerfCounter
 {

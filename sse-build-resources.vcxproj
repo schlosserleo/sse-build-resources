@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -50,6 +50,10 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release MT|x64">
+      <Configuration>Release MT</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release MD|x64">
       <Configuration>Release MT</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
@@ -122,7 +126,6 @@
     <ClInclude Include="skse64\skse64\skse64\BSModelDB.h" />
     <ClInclude Include="skse64\skse64\skse64\FormTraits.h" />
     <ClInclude Include="skse64\skse64\skse64\GameAPI.h" />
-    <ClInclude Include="skse64\skse64\skse64\GameAudio.h" />
     <ClInclude Include="skse64\skse64\skse64\GameBSExtraData.h" />
     <ClInclude Include="skse64\skse64\skse64\GameCamera.h" />
     <ClInclude Include="skse64\skse64\skse64\GameData.h" />
@@ -181,7 +184,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ext\AddressLibrary.cpp" />
-    <ClCompile Include="ext\Checksum.cpp" />
     <ClCompile Include="ext\GameCommon.cpp" />
     <ClCompile Include="ext\GameHandles.cpp" />
     <ClCompile Include="ext\IHook.cpp" />
@@ -189,7 +191,6 @@
     <ClCompile Include="ext\INIReader.cpp" />
     <ClCompile Include="ext\IOS.cpp" />
     <ClCompile Include="ext\ISKSE.cpp" />
-    <ClCompile Include="ext\ISKSESerialization.cpp" />
     <ClCompile Include="ext\ITaskPool.cpp" />
     <ClCompile Include="ext\ITasks.cpp" />
     <ClCompile Include="ext\JITASM.cpp" />
@@ -199,7 +200,6 @@
     <ClCompile Include="ext\Patching.cpp" />
     <ClCompile Include="ext\PerfCounter.cpp" />
     <ClCompile Include="ext\RTTI.cpp" />
-    <ClCompile Include="ext\Serialization.cpp" />
     <ClCompile Include="ext\Stream.cpp" />
     <ClCompile Include="ext\StrHelpers.cpp" />
     <ClCompile Include="ext\TaskQueue.cpp" />
@@ -207,7 +207,6 @@
     <ClCompile Include="ext\workerpool.cpp" />
     <ClCompile Include="skse64\skse64\skse64\BSModelDB.cpp" />
     <ClCompile Include="skse64\skse64\skse64\GameAPI.cpp" />
-    <ClCompile Include="skse64\skse64\skse64\GameAudio.cpp" />
     <ClCompile Include="skse64\skse64\skse64\GameBSExtraData.cpp" />
     <ClCompile Include="skse64\skse64\skse64\GameCamera.cpp" />
     <ClCompile Include="skse64\skse64\skse64\GameData.cpp" />
@@ -236,7 +235,6 @@
     <ClCompile Include="skse64\skse64\skse64\NiInterpolators.cpp" />
     <ClCompile Include="skse64\skse64\skse64\NiLight.cpp" />
     <ClCompile Include="skse64\skse64\skse64\NiMaterial.cpp" />
-    <ClCompile Include="skse64\skse64\skse64\NiMemManager.cpp" />
     <ClCompile Include="skse64\skse64\skse64\NiNodes.cpp" />
     <ClCompile Include="skse64\skse64\skse64\NiObjects.cpp" />
     <ClCompile Include="skse64\skse64\skse64\NiProperties.cpp" />
@@ -298,6 +296,13 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release MT|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release MD|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
@@ -425,6 +430,9 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release MT|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release MD|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release MT - NB|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -475,6 +483,9 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release MT|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release MD|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release MT - NB|x64'">
@@ -555,6 +566,10 @@
     <VcpkgTriplet>x64-windows-rel-static</VcpkgTriplet>
     <VcpkgConfiguration>Release</VcpkgConfiguration>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release MD|x64'">
+    <VcpkgTriplet>x64-windows-rel-static</VcpkgTriplet>
+    <VcpkgConfiguration>Release</VcpkgConfiguration>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release MT - NB|x64'" Label="Vcpkg">
     <VcpkgTriplet>x64-windows-rel-static</VcpkgTriplet>
     <VcpkgConfiguration>Release</VcpkgConfiguration>
@@ -570,7 +585,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;_DEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;_DEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -593,7 +608,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -618,7 +633,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -642,11 +657,40 @@
       <EnableUAC>false</EnableUAC>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release MD|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;_SKMP_DISABLE_BOOST_SERIALIZATION;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)\skse64;$(ProjectDir)\skse64\skse64\;$(ProjectDir);$(ProjectDir)..\sparse-map\include</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>common/IPrefix.h;ext/ICommon.h</ForcedIncludeFiles>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <IntelJCCErratum>true</IntelJCCErratum>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>/permissive %(AdditionalOptions)</AdditionalOptions>
+      <StringPooling>true</StringPooling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release MT - NB|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;_SKMP_DISABLE_BOOST_SERIALIZATION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;_SKMP_DISABLE_BOOST_SERIALIZATION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -676,7 +720,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -705,7 +749,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -734,7 +778,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -762,7 +806,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -793,7 +837,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -823,7 +867,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -853,7 +897,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -882,7 +926,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -918,7 +962,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -953,7 +997,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -989,7 +1033,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -1014,7 +1058,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;NDEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -1042,7 +1086,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;SKSE_ENABLE_BOOST_SERIALIZATION;BOOST_BIND_NO_PLACEHOLDERS;DEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;BOOST_BIND_NO_PLACEHOLDERS;DEBUG;SSEBUILDRESOURCES_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>

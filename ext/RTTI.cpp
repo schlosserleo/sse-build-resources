@@ -4,7 +4,7 @@ IRTTI::IRTTI()
 {
 	for (std::uint32_t i = 0; i < NUM_RTTI; i++)
 	{
-		addrs[i] = IAL::Addr<void*>(aids[i], aids_ae[i]);
+		addrs[i] = IAL::AddrSoft<void*>(aids[i], aids_ae[i]);
 	}
 }
 
